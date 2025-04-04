@@ -1,32 +1,18 @@
-import { UserIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer 
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        width: '100%',
-        height: '350px',
-        backgroundColor: '#fc7168',
-        boxShadow: '0 -2px 4px rgba(0,0,0,0.1)'
-      }}
-    >
-      <div 
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0 1rem'
-        }}
-      >
-        <div style={{ textAlign: 'center', color: 'white' }}>
-          <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Joby</p>
-          <p style={{ marginTop: '0.5rem' }}>© 2025 Joby. Todos los derechos reservados.</p>
+    <footer className="bg-gray-800 text-white py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="md:flex md:items-center md:justify-between">
+          <div className="flex justify-center md:justify-start">
+            <Link href="/" className="text-2xl font-bold">
+              Joby
+            </Link>
+          </div>
+          <div className="mt-8 md:mt-0 text-center md:text-right">
+            <p>&copy; {new Date().getFullYear()} Job Seeker's Dream. All rights reserved.</p>
+          </div>
         </div>
       </div>
     </footer>

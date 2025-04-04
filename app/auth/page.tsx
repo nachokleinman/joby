@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function AuthPage() {
@@ -10,6 +10,17 @@ export default function AuthPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
+
+  useEffect(() => {
+    // Verificar si el usuario ya ha iniciado sesión
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
+    if (token && user) {
+      // Si hay una sesión activa, redirigir al perfil
+      router.push('/profile')
+    }
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,12 +50,30 @@ export default function AuthPage() {
         // Guardar el token y usuario en localStorage
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
-        router.push('/dashboard')
+        router.push('/profile')
       } else {
-        // Después de registrarse, cambiar a modo login
-        setIsLogin(true)
-        setEmail('')
-        setPassword('')
+        // Después de registrarse, hacer login automáticamente
+        const loginBody = { email, password, action: 'login' }
+        const loginRes = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginBody),
+        })
+        
+        const loginData = await loginRes.json()
+        
+        if (!loginRes.ok) {
+          throw new Error(loginData.error || 'Error al iniciar sesión automáticamente')
+        }
+        
+        // Guardar el token y usuario en localStorage
+        localStorage.setItem('token', loginData.token)
+        localStorage.setItem('user', JSON.stringify(loginData.user))
+        
+        // Redirigir al perfil
+        router.push('/profile')
       }
     } catch (err: any) {
       setError(err.message)

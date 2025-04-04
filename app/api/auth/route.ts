@@ -68,7 +68,9 @@ export async function POST(request: Request) {
         user: {
           id: user._id,
           email: user.email,
-          name: user.name
+          name: user.name,
+          createdAt: user.createdAt,
+          profileImage: user.profileImage || null
         }
       })
     }
