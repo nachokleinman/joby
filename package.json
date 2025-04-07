@@ -22,7 +22,7 @@
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.15.0",
-    "next": "14.1.0",
+    "next": "^14.1.0",
     "postcss": "^8",
     "puppeteer": "^24.6.0",
     "react": "^18",
